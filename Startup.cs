@@ -37,7 +37,9 @@ namespace RoslynScript
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseStaticFiles();
+            app.UseDefaultFiles(); // serve index.html
+            app.UseStaticFiles(); // serve wwwroot dir
+            app.UseMvc();
         }
     }
 }

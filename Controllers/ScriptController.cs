@@ -7,6 +7,12 @@ namespace RoslynScript
     [Route("/api/script")]
     public class RulesController
     {
+        [HttpGet]
+        public string Get()
+        {
+            return "Hello";
+        }
+
         [HttpPost]
         public ExecutionResult Post([FromBody]ExecutionRequest rule)
         {
