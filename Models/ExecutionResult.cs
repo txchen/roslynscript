@@ -12,7 +12,11 @@ namespace RoslynScript
 
     public class ExecutionResult
     {
-        public Decision Decision { get; set; }
+        public int ErrorCode { get; set; }
+
+        public string ErrorDescription { get; set; }
+
+        public string Decision { get; set; }
 
         public Dictionary<string, object> Outputs { get; set; }
     }

@@ -16,7 +16,7 @@ namespace RoslynScript
         [HttpPost]
         public ExecutionResult Post([FromBody]ExecutionRequest rule)
         {
-            return new ExecutionResult();
+            return new ExecutionResult() { Decision = Decision.Approve.ToString() };
         }
     }
 }
