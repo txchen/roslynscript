@@ -18,8 +18,12 @@
 
           <div class="columns">
             <div class="column col-8">
-              <h5>C# Script</h5>
+              <h5>C# Script (Dad, can I buy this?)</h5>
               <div id="editor">// your cs script
+int x = 0;
+int y = 1;
+int z = x + y;
+return Decision.Approve;
 </div>
             </div>
             <div class="column col-4">
@@ -51,6 +55,7 @@
     editor3.setTheme('ace/theme/chrome')
     editor3.getSession().setMode('ace/mode/json')
     editor3.renderer.setShowGutter(false)
+    editor3.getSession().setUseWrapMode(true)
 
     function showResult(resultObject) {
       editor3.getSession().setValue(JSON.stringify(resultObject, null, '  '), 1)
@@ -75,6 +80,13 @@
           var csscript = editor.getSession().getValue()
 
           // call api to execute
+          this.$http.post('/api/script', { ScriptContent: csscript,  Inputs: inputs }).then((response) => {
+            // success callback
+            showResult(response.data)
+          }, (response) => {
+            // error callback
+            showResult({ errorType: 'serverInternalError' , response: response })
+          });
         }
       }
     })

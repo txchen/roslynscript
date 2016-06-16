@@ -18,6 +18,6 @@ namespace RoslynScript
 
         public string Decision { get; set; }
 
-        public Dictionary<string, object> Outputs { get; set; }
+        public Dictionary<string, object> Vars { get; set; }
     }
 }
