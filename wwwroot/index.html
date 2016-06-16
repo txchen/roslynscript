@@ -2,9 +2,10 @@
 <html>
   <head>
   <meta charset="utf-8">
-    <title>Roslyn Test</title>
+    <title>Roslyn Playground</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="lib/vue.min.js"></script>
+    <script src="lib/vue-resource.js"></script>
     <script src="lib/ace.js" type="text/javascript" charset="utf-8"></script>
     <link type="text/css" rel="stylesheet" href="css/spectre.min.css">
     <link type="text/css" rel="stylesheet" href="css/index.css">
@@ -13,28 +14,25 @@
     <div class="container" id="app">
       <div class="columns">
         <div class="column col-9 centered">
-          <h2>Roslyn Playground</h2>
+          <h3>Roslyn Playground</h3>
 
           <div class="columns">
             <div class="column col-8">
-              <h4>C# Script</h4>
-              <div id="editor">function foo(items) {
-    var x = "All this is syntax highlighted";
-    return x;
-}</div>
+              <h5>C# Script</h5>
+              <div id="editor">// your cs script
+</div>
             </div>
             <div class="column col-4">
-              <h4>Context Input JSON</h4>
-              <div id="editor2">{
-  "hello": 1,
-  "world": "c#"
-}</div>
+              <h5>Context Input JSON</h5>
+              <div id="editor2">{ "x": 1 }</div>
             </div>
           </div>
 
           <div class="column col-3">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" @click="executeScript">Submit</button>
           </div>
+
+          <div id="editor3"></div>
 
         </div>
       </div>
@@ -43,15 +41,41 @@
     var editor = ace.edit('editor')
     editor.setTheme('ace/theme/monokai')
     editor.getSession().setMode('ace/mode/csharp')
+    editor.getSession().setTabSize(2)
 
     var editor2 = ace.edit('editor2')
     editor2.setTheme('ace/theme/monokai')
     editor2.getSession().setMode('ace/mode/json')
 
+    var editor3 = ace.edit('editor3')
+    editor3.setTheme('ace/theme/chrome')
+    editor3.getSession().setMode('ace/mode/json')
+    editor3.renderer.setShowGutter(false)
+
+    function showResult(resultObject) {
+      editor3.getSession().setValue(JSON.stringify(resultObject, null, '  '), 1)
+    }
+
     new Vue({
       el: '#app',
       data: {
-        message: 'Hello Roslyn'
+      },
+      methods: {
+        executeScript: function() {
+          // get inputs
+          var inputs = {}
+          try {
+            inputs = JSON.parse(editor2.getSession().getValue())
+          } catch (e) {
+            showResult({ errorType: 'inputError',
+              errorDetail: 'Please make sure input is a valid json: ' + e.toString()})
+            return
+          }
+          // get cs script
+          var csscript = editor.getSession().getValue()
+
+          // call api to execute
+        }
       }
     })
     </script>
