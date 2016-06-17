@@ -19,16 +19,32 @@
           <div class="columns">
             <div class="column col-8">
               <h5>C# Script (Dad, can I buy this?)</h5>
-              <div id="editor">// your cs script
-int x = 0;
-int y = 1;
-int z = x + y;
-return Decision.Approve;
+              <div id="editor">// Write your c# rule here
+// You can use GetLong(key), GetString(key), GetDouble(key) to access input vars
+// The variables in your script, would also be captured by the engine
+double totalPrice = GetDouble("price") * GetLong("quantity");
+if (GetString("name").Contains("xbox"))
+{
+  return Decision.Approve;
+}
+if (GetDouble("price") >= 50)
+{
+  return Decision.Reject;
+}
+if (GetLong("quantity") >= 100)
+{
+  return Decision.None;
+}
+return Decision.NeedReview;
 </div>
             </div>
             <div class="column col-4">
               <h5>Context Input JSON</h5>
-              <div id="editor2">{ "x": 1 }</div>
+              <div id="editor2">{
+  "name": "super mario",
+  "price": 99.99,
+  "quantity": 10
+}</div>
             </div>
           </div>
 
