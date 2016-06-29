@@ -11,6 +11,7 @@ namespace RoslynScript
 {
     public class RSContext
     {
+        Random _rand = new Random();
         private Dictionary<string, object> _inputs;
         public RSContext(Dictionary<string, object> inputs)
         {
@@ -43,6 +44,12 @@ namespace RoslynScript
                 return (double)_inputs[key];
             }
             return 0;
+        }
+
+        public async Task<double> GetRandomAmount(int max)
+        {
+            await Task.Delay(200);
+            return _rand.NextDouble() * max;
         }
     }
 

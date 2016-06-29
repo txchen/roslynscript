@@ -20,14 +20,16 @@
             <div class="column col-8">
               <h5>C# Script (Dad, can I buy this?)</h5>
               <div id="editor">// Write your c# rule here
+// Write your c# rule here
 // You can use GetLong(key), GetString(key), GetDouble(key) to access input vars
 // The variables in your script, would also be captured by the engine
 double totalPrice = GetDouble("price") * GetLong("quantity");
+totalPrice += await GetRandomAmount(100);
 if (GetString("name").Contains("xbox"))
 {
   return Decision.Approve;
 }
-if (GetDouble("price") >= 50)
+if (totalPrice >= 1050)
 {
   return Decision.Reject;
 }
